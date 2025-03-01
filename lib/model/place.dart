@@ -15,6 +15,7 @@ class Place {
   String? zipCodePlus4;
   String? vicinity;
   String? country;
+  String? countryShort;
   double? lat;
   double? lng;
 
@@ -35,6 +36,7 @@ class Place {
     this.zipCodePlus4,
     this.vicinity,
     this.country,
+    this.countryShort,
     this.lat,
     this.lng,
   });

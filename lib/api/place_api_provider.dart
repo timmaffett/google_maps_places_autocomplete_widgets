@@ -358,6 +358,7 @@ result["result"]
           }
           if (type.contains('country')) {
             place.country = component['long_name'];
+            place.countryShort = component['short_name'];
           }
           if (type.contains('postal_code')) {
             place.zipCode = component['long_name'];
