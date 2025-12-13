@@ -44,6 +44,9 @@ abstract class AddresssAutocompleteStatefulWidget extends StatefulWidget {
   ///your maps api key, must not be null
   abstract final String mapsApiKey;
 
+  ///your proxy url for web
+  abstract final String? proxyUrl;
+
   ///builder used to render each item displayed
   ///must not be null
   abstract final Widget Function(Suggestion, int)? buildItem;
@@ -250,7 +253,10 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
                 widget.onSuggestionClick != null) {
               // If they need more details now do async request
               // for Place details..
-              Place place = await addressService.getPlaceDetail(s.placeId);
+              Place place = await addressService.getPlaceDetail(
+                s.placeId,
+                proxyUrl: widget.proxyUrl,
+              );
               if (widget.onSuggestionClickGetTextToUseForControl != null) {
                 controller?.text =
                     widget.onSuggestionClickGetTextToUseForControl!(place) ??
@@ -285,10 +291,12 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
               children: [
                 buildListViewerBuilder, //...buildList(),
                 if (widget.showGoogleTradeMark)
-                  const Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Text('powered by google'),
-                  )
+                   Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('powered by google',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
               ],
             ),
           )));
@@ -318,20 +326,22 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
           'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed');
 
       _lastText = text;
-      suggestions = await addressService.search(text,
-          includeFullSuggestionDetails:
-              (widget.onInitialSuggestionClick != null),
-          types: [
-            if (widget.postalCodeLookup == true)
-              AutoCompleteType.postalCode
-            else if (widget.postalCodeLookup == false ||
-                (widget.type == null && widget.types == null))
-              AutoCompleteType.address
-            else if (widget.type != null)
-              widget.type!
-            else if (widget.types != null)
-              ...widget.types!
-          ]);
+      suggestions = await addressService.search(
+        text,
+        includeFullSuggestionDetails: (widget.onInitialSuggestionClick != null),
+        types: [
+          if (widget.postalCodeLookup == true)
+            AutoCompleteType.postalCode
+          else if (widget.postalCodeLookup == false ||
+              (widget.type == null && widget.types == null))
+            AutoCompleteType.address
+          else if (widget.type != null)
+            widget.type!
+          else if (widget.types != null)
+            ...widget.types!
+        ],
+        proxyUrl: widget.proxyUrl,
+      );
     }
     if (entry != null) {
       entry!.markNeedsBuild();
@@ -366,10 +376,13 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
   /// Provides default implementation of Suggestion list item builder
   Widget defaultItemBuilder(Suggestion suggestion, int index) {
     return Container(
-        margin: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.centerLeft,
-        color: Colors.white,
-        child: Text(suggestion.description));
+      margin: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+      padding: const EdgeInsets.all(8),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        suggestion.description,
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+    );
   }
 }

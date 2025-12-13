@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_places_autocomplete_widgets/api/autocomplete_types.dart';
 import 'package:http/http.dart';
@@ -104,7 +105,8 @@ result["predictions"] =
   ///   instead of address type information.
   Future<List<Suggestion>> fetchSuggestions(String input,
       {bool includeFullSuggestionDetails = false,
-      required List<AutoCompleteType> types}) async {
+      required List<AutoCompleteType> types,
+      String? proxyUrl}) async {
     /// OK, we need to check the types array..
     String typesString = '';
     for (final type in types) {
@@ -135,11 +137,30 @@ result["predictions"] =
           .addAll(<String, dynamic>{'components': 'country:$compomentCountry'});
     }
 
-    final Uri request = Uri(
-        scheme: 'https',
-        host: 'maps.googleapis.com',
-        path: '/maps/api/place/autocomplete/json',
-        queryParameters: parameters);
+    Uri request = Uri(
+      scheme: 'https',
+      host: 'maps.googleapis.com',
+      path: '/maps/api/place/autocomplete/json',
+      queryParameters: parameters,
+    );
+
+    //Add Proxy support for web
+    if ((proxyUrl != null && proxyUrl.isNotEmpty)) {
+      final proxyRequest = Uri.tryParse(proxyUrl) ??
+          Uri(
+            scheme: 'https',
+            host: 'maps.googleapis.com',
+            path: '/maps/api/place/autocomplete/json',
+            queryParameters: parameters,
+          );
+
+      request = Uri(
+        scheme: proxyRequest.scheme,
+        host: proxyRequest.host,
+        path: proxyRequest.path,
+        queryParameters: parameters,
+      );
+    }
 
     final response = await client.get(request);
 
@@ -282,7 +303,7 @@ result["result"]
   */
   ///Requests full address info from Google Places API for the specified
   ///[placeId] and returns a [Place] object returned info.
-  Future<Place> getPlaceDetailFromId(String placeId) async {
+  Future<Place> getPlaceDetailFromId(String placeId, {String? proxyUrl}) async {
     // if you want to get the details of the selected place by place_id
     final Map<String, dynamic> parameters = <String, dynamic>{
       'place_id': placeId,
@@ -290,15 +311,33 @@ result["result"]
       'key': mapsApiKey,
       'sessiontoken': sessionToken
     };
-    final Uri request = Uri(
-        scheme: 'https',
-        host: 'maps.googleapis.com',
-        path: '/maps/api/place/details/json',
+    Uri request = Uri(
+      scheme: 'https',
+      host: 'maps.googleapis.com',
+      path: '/maps/api/place/details/json',
 
-        //PlaceApiNew     host: 'places.googleapis.com',
-        //PlaceApiNew     path: '/v1/places/$placeId',
+      //PlaceApiNew     host: 'places.googleapis.com',
+      //PlaceApiNew     path: '/v1/places/$placeId',
 
-        queryParameters: parameters);
+      queryParameters: parameters,
+    );
+    //Add Proxy support for web
+    if ((proxyUrl != null && proxyUrl.isNotEmpty)) {
+      final proxyRequest = Uri.tryParse(proxyUrl) ??
+          Uri(
+            scheme: 'https',
+            host: 'maps.googleapis.com',
+            path: '/maps/api/place/details/json',
+            queryParameters: parameters,
+          );
+
+      request = Uri(
+        scheme: proxyRequest.scheme,
+        host: proxyRequest.host,
+        path: proxyRequest.path,
+        queryParameters: parameters,
+      );
+    }
 
     if (debugJson) {
       debugPrint(request.toString());

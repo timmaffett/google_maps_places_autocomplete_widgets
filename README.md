@@ -126,6 +126,61 @@ and optional parameters.
 This includes the use of the address autocomplete TextFormField widget to fill
 multiple other TextFormFields from the user's selected address suggestion.
 
+## Proxy Example
+This code shows an example of a proxy created using Firebase Cloud Functions.
+
+```javascript
+
+const corsHandler = cors({ origin: true });
+export const placesApiProxy = onRequest(async (req: any, res: any) => {
+  corsHandler(req, res, async () => {
+    if (req.method === "OPTIONS") {
+      return res.status(204).send("");
+    }
+    try {
+      const { input, place_id: placeId } = req.query;
+
+      const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+      let googleRes = await got(
+        "https://maps.googleapis.com/maps/api/place/autocomplete/json",
+        {
+          searchParams: { input, "types": "address", "key": apiKey },
+          responseType: "json",
+        }
+      );
+      // If the place_id is set, we hit the details api instead.
+      if (placeId) {
+        googleRes = await got(
+          "https://maps.googleapis.com/maps/api/place/details/json",
+          {
+            searchParams: {
+              "placeid": placeId, "types": "address",
+              "key": apiKey,
+            },
+            responseType: "json",
+          }
+        );
+      }
+
+      logger.debug("placesApiProxy | googleRes:", googleRes);
+      const body = googleRes.body as any;
+      logger.debug("placesApiProxy | response:", body);
+
+      return res.status(200).json(body);
+    } catch (err: any) {
+      logger.error("placesApiProxy | caught error:", {
+        message: err.message,
+        stack: err.stack,
+        responseBody: err.response?.body,
+      });
+      return res
+        .status(500)
+        .json({ error: "Internal error", details: err.message });
+    }
+  });
+});
+```
+
 ## Additional information
 
 This package implements the official documentation of Google Maps Places API

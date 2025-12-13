@@ -54,6 +54,10 @@ class AddressAutocompleteTextFormField
   @override
   final String mapsApiKey;
 
+  ///your proxy url for web
+  @override
+  final String? proxyUrl;
+
   ///builder used to render each item displayed
   ///must not be null
   @override
@@ -229,6 +233,7 @@ class AddressAutocompleteTextFormField
   const AddressAutocompleteTextFormField({
     super.key,
     required this.mapsApiKey,
+    this.proxyUrl,
     this.controller,
     this.requiredField = false,
     this.validator = defaultValidator,

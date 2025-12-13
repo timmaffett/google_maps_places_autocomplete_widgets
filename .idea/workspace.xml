@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d68d031c-4b0c-4e1f-a08b-62714b863d14" name="Changes" comment="UPDATE: remove color from container">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
@@ -13,24 +28,188 @@
       </file>
     </leaf>
   </component>
-  <component name="ToolWindowManager">
-    <editor active="true" />
-    <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-    </layout>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;disparta&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:disparta/google_maps_places_autocomplete_widgets.git&quot;,
+    &quot;accountId&quot;: &quot;fb9b68b4-d509-4a5e-8af9-dbfdae7efdc7&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2yVFJYby83U5nySXHJh9DgXuOH1" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-    </navigator>
+    <navigator currentView="ProjectPane" proportions="" version="1" />
     <panes>
       <pane id="ProjectPane">
         <option name="show-excluded-files" value="false" />
       </pane>
     </panes>
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="dart.analysis.tool.window.force.activate" value="true" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d68d031c-4b0c-4e1f-a08b-62714b863d14" name="Changes" comment="" />
+      <created>1749911763393</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749911763393</updated>
+    </task>
+    <task id="LOCAL-00001" summary="FEAT: Add support for a proxy url to support Flutter Web">
+      <option name="closed" value="true" />
+      <created>1750064554301</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750064554301</updated>
+    </task>
+    <task id="LOCAL-00002" summary="CHORE: Upgrade dependencies to latest versions">
+      <option name="closed" value="true" />
+      <created>1750065033917</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750065033917</updated>
+    </task>
+    <task id="LOCAL-00003" summary="CHORE: Prevent proxy url use on non-web platforms">
+      <option name="closed" value="true" />
+      <created>1750065063372</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1750065063372</updated>
+    </task>
+    <task id="LOCAL-00004" summary="CHORE: Add proxy example in read me">
+      <option name="closed" value="true" />
+      <created>1750065082814</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1750065082814</updated>
+    </task>
+    <task id="LOCAL-00005" summary="CHORE: Update example app with the PROXY URL">
+      <option name="closed" value="true" />
+      <created>1750065182516</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1750065182516</updated>
+    </task>
+    <task id="LOCAL-00006" summary="FIX: getDetails not using the proxy url">
+      <option name="closed" value="true" />
+      <created>1750097050122</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1750097050122</updated>
+    </task>
+    <task id="LOCAL-00007" summary="UPDATE: If proxy url is supplied, we use that instead of google api on all platforms">
+      <option name="closed" value="true" />
+      <created>1750276923239</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1750276923239</updated>
+    </task>
+    <task id="LOCAL-00008" summary="UPDATE: Remove white color on default item">
+      <option name="closed" value="true" />
+      <created>1764882183767</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1764882183767</updated>
+    </task>
+    <task id="LOCAL-00009" summary="UPDATE: Use primaryContainer">
+      <option name="closed" value="true" />
+      <created>1764882431243</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1764882431243</updated>
+    </task>
+    <task id="LOCAL-00010" summary="UPDATE: Use cardColor">
+      <option name="closed" value="true" />
+      <created>1764882592501</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1764882592501</updated>
+    </task>
+    <task id="LOCAL-00011" summary="UPDATE: remove color from container">
+      <option name="closed" value="true" />
+      <created>1764882970625</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1764882970625</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="FEAT: Add support for a proxy url to support Flutter Web" />
+    <MESSAGE value="CHORE: Upgrade dependencies to latest versions" />
+    <MESSAGE value="CHORE: Prevent proxy url use on non-web platforms" />
+    <MESSAGE value="CHORE: Add proxy example in read me" />
+    <MESSAGE value="CHORE: Update example app with the PROXY URL" />
+    <MESSAGE value="FIX: getDetails not using the proxy url" />
+    <MESSAGE value="UPDATE: If proxy url is supplied, we use that instead of google api on all platforms" />
+    <MESSAGE value="UPDATE: Remove white color on default item" />
+    <MESSAGE value="UPDATE: Use primaryContainer" />
+    <MESSAGE value="UPDATE: Use cardColor" />
+    <MESSAGE value="UPDATE: remove color from container" />
+    <option name="LAST_COMMIT_MESSAGE" value="UPDATE: remove color from container" />
   </component>
 </project>

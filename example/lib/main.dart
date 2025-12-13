@@ -162,6 +162,7 @@ class _AddressAutocompleteTextFieldExampleState
                 child: AddressAutocompleteTextField(
                   type: AutoCompleteType.postalCode,
                   keyboardType: TextInputType.number,
+                  proxyUrl: PROXY_URL,
                   maxLength: 5,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   style: const TextStyle(
@@ -591,6 +592,7 @@ class _AddressAutocompleteTextFormFieldExampleState
                 AddressAutocompleteTextFormField(
                   // following args specific to AddressAutocompleteTextFormField()
                   mapsApiKey: GOOGLE_MAPS_ACCOUNT_API_KEY,
+                  proxyUrl: PROXY_URL,
                   debounceTime: 200,
                   //In practice this does not seem to help United States address//prepareQuery: prepareQuery,
                   onClearClick: onClearClick,

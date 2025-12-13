@@ -1,5 +1,8 @@
 # google_maps_places_autocomplete_widgets package
 
+## 1.3.4
+* Added support for a Proxy URL to enable Flutter Web support without CORS issues.
+* 
 ## 1.3.3
 
 * Fix dart analyze warning about using deprecated postalCodeLookup (which we use internally to allow it to continue to work

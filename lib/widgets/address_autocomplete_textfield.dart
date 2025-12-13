@@ -50,6 +50,10 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
   @override
   final String mapsApiKey;
 
+  ///your proxy url for web
+  @override
+  final String? proxyUrl;
+
   ///builder used to render each item displayed
   ///must not be null
   @override
@@ -185,6 +189,7 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
   const AddressAutocompleteTextField({
     super.key,
     required this.mapsApiKey,
+    this.proxyUrl,
     this.controller,
     this.focusNode,
     this.initialValue,
