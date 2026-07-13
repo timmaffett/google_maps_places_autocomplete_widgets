@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import '/api/autocomplete_types.dart';
 import '/api/new_api_type_mapping.dart';
 import '/api/place_api_provider.dart';
+import '/api/place_builder.dart';
 import '/model/place.dart';
 import '/model/suggestion.dart';
 
@@ -121,6 +122,42 @@ class NewPlaceApiProvider extends PlaceApiProvider {
 
   @override
   Future<Place> getPlaceDetailFromId(String placeId) async {
-    throw UnimplementedError('implemented in the next commit');
+    // Passing the session token here terminates the autocomplete billing
+    // session, exactly as the legacy `sessiontoken` param did.
+    final response = await client.get(
+      Uri.https(_host, '/v1/places/$placeId', <String, String>{
+        'sessionToken': sessionToken,
+        if (language != null) 'languageCode': language!,
+      }),
+      headers: {
+        ..._baseHeaders(),
+        'X-Goog-FieldMask':
+            'id,displayName,formattedAddress,addressComponents,location',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      _throwApiError(response, 'fetch place details');
+    }
+
+    final result = json.decode(response.body) as Map<String, dynamic>;
+    return buildPlaceFromComponents(
+      components: [
+        for (final component
+            in result['addressComponents'] as List<dynamic>? ?? const [])
+          RawAddressComponent(
+            types: ((component as Map<String, dynamic>)['types']
+                        as List<dynamic>? ??
+                    const [])
+                .cast<String>(),
+            longText: component['longText'] as String?,
+            shortText: component['shortText'] as String?,
+          ),
+      ],
+      name: result['displayName']?['text'] as String?,
+      formattedAddress: result['formattedAddress'] as String?,
+      lat: (result['location']?['latitude'] as num?)?.toDouble(),
+      lng: (result['location']?['longitude'] as num?)?.toDouble(),
+    );
   }
 }
