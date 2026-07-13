@@ -1,3 +1,4 @@
+import '/api/legacy_place_api_provider.dart';
 import '/api/place_api_provider.dart';
 import '/api/autocomplete_types.dart';
 import '/model/place.dart';
@@ -6,8 +7,8 @@ import '/model/suggestion.dart';
 class AddressService {
   AddressService(this.sessionToken, this.mapsApiKey, this.componentCountry,
       this.language) {
-    apiClient =
-        PlaceApiProvider(sessionToken, mapsApiKey, componentCountry, language);
+    apiClient = LegacyPlaceApiProvider(
+        sessionToken, mapsApiKey, componentCountry, language);
   }
 
   final String sessionToken;
