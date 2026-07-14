@@ -9,9 +9,13 @@ available via `apiVersion: PlacesApiVersion.legacy` (1.3.x line was legacy-only)
 ## Commands
 
 - `flutter analyze` — lint (uses `flutter_lints`)
-- `flutter test` — unit tests
+- `flutter test` — unit tests (live smoke tests auto-skip without keys)
+- `flutter test test/live_api_smoke_test.dart` — LIVE tests against the real Google APIs;
+  needs `test/private_keys.json` (git-ignored; copy `test/private_keys.json.template`)
 - `cd example && flutter run` — demo app; requires a real Maps API key
-  (example reads it from `example/lib/privatekeys.dart`, which is git-ignored/private)
+  (example reads it from `example/lib/privatekeys.dart`, git-ignored via `example/.gitignore`)
+- `cd example && flutter run -d chrome` — MUST be run from `example/`, not the repo root
+  (the root is the library package and has no `lib/main.dart`)
 
 ## Architecture
 
