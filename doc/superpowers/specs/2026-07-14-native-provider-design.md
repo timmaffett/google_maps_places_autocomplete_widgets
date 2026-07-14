@@ -27,13 +27,35 @@ changes.
 | App Check | **Ships in v1** (it is the reason the plugin exists), as an opt-in `useAppCheck` flag on `initialize()`. |
 | Name | `google_maps_places_autocomplete_widgets_native` |
 | Plugin structure | Single plugin package declaring `android` + `ios` platforms (NOT a federated multi-package split — unwarranted for a 3-method surface we fully own). |
+| Core wart fix | **Core v2.1.0 makes `mapsApiKey` optional** (`String?`); required unless `placeApiProvider` is supplied (constructor assert). Ships before/with the native package; the native package depends on core `^2.1.0`. |
+| Firebase linkage | Confirmed by Tim 2026-07-14: linking Firebase App Check natively for all plugin users is fine — App Check IS the reason to use the native SDK. |
+
+## Package layout
+
+## Core package change first: v2.1.0 `mapsApiKey` optional
+
+Today the widgets require `mapsApiKey` even when `placeApiProvider` bypasses it — the
+`mapsApiKey: 'unused'` wart. Core v2.1.0 fixes this:
+
+- `AddresssAutocompleteStatefulWidget.mapsApiKey` becomes `abstract final String? mapsApiKey`
+  (both concrete widgets follow; the constructor param becomes optional).
+- New constructor assert on both widgets:
+  `assert(mapsApiKey != null || placeApiProvider != null, 'mapsApiKey is required unless a custom placeApiProvider is supplied')`.
+- `AddressService` accepts `String? mapsApiKey`; the built-in providers (which are only
+  constructed when `placeApiProvider` is null, hence when `mapsApiKey` is non-null per the
+  assert) receive `mapsApiKey!`.
+- **Backward compatible** (minor version): existing callers already pass the key; existing
+  subclasses that declare `final String mapsApiKey` still satisfy the now-nullable
+  abstract getter (non-nullable override of a nullable member is legal Dart).
+- Published as core **2.1.0** as soon as it lands — the native package then depends on
+  `^2.1.0` and its examples/docs omit `mapsApiKey` entirely.
 
 ## Package layout
 
 ```
 packages/google_maps_places_autocomplete_widgets_native/
   pubspec.yaml            flutter plugin (android+ios), depends on
-                          google_maps_places_autocomplete_widgets: ^2.0.0
+                          google_maps_places_autocomplete_widgets: ^2.1.0
   pigeons/messages.dart   Pigeon definitions (input to code generation)
   lib/
     google_maps_places_autocomplete_widgets_native.dart   barrel export
@@ -80,7 +102,7 @@ Usage with the core widgets (the point of the whole design — one line changes)
 await NativePlaceApiProvider.initialize(mapsApiKey: key, useAppCheck: true);
 ...
 AddressAutocompleteTextField(
-  mapsApiKey: 'unused',   // core param is required but bypassed by injection
+  // no mapsApiKey needed — core 2.1.0 makes it optional when a provider is injected
   placeApiProvider: NativePlaceApiProvider(componentCountry: 'us'),
   ...
 )
@@ -178,9 +200,10 @@ side rethrows as `Exception`.
   `firebase_core` + `firebase_app_check` configured, Play Integrity registration
   (Android) / App Attest (iOS), then — after monitoring — turning on **enforcement** in
   the Cloud console, which is what actually makes a scraped key useless.
-- **Accepted tradeoff:** the plugin's native builds link the Firebase App Check libraries
-  even for apps that never opt in. A separate "-appcheck addon" package was rejected as
-  complexity not yet earned; revisit if users report binary-size complaints.
+- **Accepted tradeoff (confirmed by Tim 2026-07-14):** the plugin's native builds link the
+  Firebase App Check libraries even for apps that never opt in — acceptable because App
+  Check is the primary reason to choose the native SDK at all. A separate "-appcheck
+  addon" package was rejected as complexity not yet earned.
 - README carries the same honest security-tier framing as the core MIGRATION.md: native
   SDK *without* App Check ≈ REST restriction headers; App Check + enforcement is the
   actual hardening.
@@ -205,6 +228,7 @@ a details readout, and an App Check on/off note. API key via a git-ignored
      Cloud console) working with zero header configuration.
   4. App Check: token flow visible in Firebase console metrics; then enforcement ON and
      verify the app still works while a raw REST call with the same key is rejected.
+     (Tim has an existing Firebase project holding the test API keys, available for this.)
 - `flutter analyze` + `dart pub publish --dry-run` clean from the package directory.
 
 ## Release
