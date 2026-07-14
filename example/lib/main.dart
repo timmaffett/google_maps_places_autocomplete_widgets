@@ -58,6 +58,7 @@ class AddressAutocompleteTextFieldExample extends StatefulWidget {
 
 class _AddressAutocompleteTextFieldExampleState
     extends State<AddressAutocompleteTextFieldExample> {
+  PlacesApiVersion _apiVersion = PlacesApiVersion.placesApiNew;
   String? _suggestionPlaceId;
   String? _suggestionDescription;
   String? _name;
@@ -155,11 +156,25 @@ class _AddressAutocompleteTextFieldExampleState
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              SwitchListTile(
+                title: Text(_apiVersion == PlacesApiVersion.placesApiNew
+                    ? 'Using Places API (New)'
+                    : 'Using legacy Places API'),
+                subtitle: const Text(
+                    'Toggle which Google Places backend the widgets below use'),
+                value: _apiVersion == PlacesApiVersion.placesApiNew,
+                onChanged: (useNew) => setState(() => _apiVersion = useNew
+                    ? PlacesApiVersion.placesApiNew
+                    : PlacesApiVersion.legacy),
+              ),
+
               // Postalcode lookup TextField example
               const Text('Example of ZipCode/Postal Code lookup:'),
               SizedBox(
                 height: 60,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('zip-$_apiVersion'),
+                  apiVersion: _apiVersion,
                   type: AutoCompleteType.postalCode,
                   keyboardType: TextInputType.number,
                   maxLength: 5,
@@ -220,6 +235,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 60,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('cities-$_apiVersion'),
+                  apiVersion: _apiVersion,
                   type: AutoCompleteType.cities,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(
@@ -276,6 +293,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 60,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('establishment-$_apiVersion'),
+                  apiVersion: _apiVersion,
                   type: AutoCompleteType.establishment,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(
@@ -332,6 +351,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 40,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('address-$_apiVersion'),
+                  apiVersion: _apiVersion,
                   // create a `privatekeys.dart` file and add your API key there
                   //   `const GOOGLE_MAPS_ACCOUNT_API_KEY = 'YourGoogleMapsApiKey_XXXXyyyzzzz';`
                   // the .gitignore file is set so this does not go into source repository.
@@ -591,6 +612,7 @@ class _AddressAutocompleteTextFormFieldExampleState
                 AddressAutocompleteTextFormField(
                   // following args specific to AddressAutocompleteTextFormField()
                   mapsApiKey: GOOGLE_MAPS_ACCOUNT_API_KEY,
+                  apiVersion: PlacesApiVersion.placesApiNew,
                   debounceTime: 200,
                   //In practice this does not seem to help United States address//prepareQuery: prepareQuery,
                   onClearClick: onClearClick,
