@@ -197,3 +197,21 @@ enum AutoCompleteType {
     return typeString;
   }
 }
+
+/// Validates the Google Places rules shared by both API backends:
+/// a maximum of 5 type values, and "single only" values (collections such
+/// as `(cities)`/`(regions)` and the legacy `address`/`geocode`/
+/// `establishment` filters) must not be combined with any other value.
+/// Throws [Exception] on violation (same behavior/messages as v1.x).
+void validateAutocompleteTypes(List<AutoCompleteType> types) {
+  for (final type in types) {
+    if (type.onlySingleValueAllowed && types.length > 1) {
+      throw Exception(
+          'If $type is specified then it is the ONLY autocomplete type allowed by Google Places. See https://developers.google.com/maps/documentation/places/web-service/autocomplete#types');
+    }
+  }
+  if (types.length > 5) {
+    throw Exception(
+        'A maximum of 5 autocomplete types are allowed by Google Places. See https://developers.google.com/maps/documentation/places/web-service/autocomplete#types');
+  }
+}

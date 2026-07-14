@@ -9,6 +9,7 @@
 .history
 .svn/
 .vscode
+.vscrof/
 
 # IntelliJ related
 # *.iml
@@ -20,6 +21,9 @@
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
+
+# Private API keys for live smoke tests (see test/private_keys.json.template)
+test/private_keys.json
 
 # Flutter/Dart/Pub related
 # Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.

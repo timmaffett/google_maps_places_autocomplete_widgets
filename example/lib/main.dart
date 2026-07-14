@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
@@ -7,10 +8,18 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  /// Which Google Places backend the demo widgets use — selected by the
+  /// dropdown below and passed to every autocomplete widget in both tabs.
+  PlacesApiVersion _apiVersion = PlacesApiVersion.placesApiNew;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,10 +43,62 @@ class MyApp extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
           ),
-          body: const TabBarView(
+          body: Column(
             children: [
-              AddressAutocompleteTextFieldExample(title: 'TextField Example'),
-              AddressAutocompleteTextFormFieldExample(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                child: Row(
+                  children: [
+                    const Text('Places API used by the widgets below:  ',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    DropdownButton<PlacesApiVersion>(
+                      value: _apiVersion,
+                      items: const [
+                        DropdownMenuItem(
+                          value: PlacesApiVersion.placesApiNew,
+                          child: Text('Places API (New)'),
+                        ),
+                        DropdownMenuItem(
+                          value: PlacesApiVersion.legacy,
+                          child: Text('Places API (Legacy)'),
+                        ),
+                      ],
+                      onChanged: (version) {
+                        if (version != null) {
+                          setState(() => _apiVersion = version);
+                        }
+                      },
+                    ),
+                    if (kIsWeb && _apiVersion == PlacesApiVersion.legacy)
+                      const Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text(
+                            'The legacy Places API WILL NOT WORK on the web '
+                            'platform: browsers block its REST endpoint '
+                            '(maps.googleapis.com sends no CORS headers, so '
+                            'every request fails with "Failed to fetch"). '
+                            'Use Places API (New) on web.',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    AddressAutocompleteTextFieldExample(
+                        title: 'TextField Example', apiVersion: _apiVersion),
+                    AddressAutocompleteTextFormFieldExample(
+                        apiVersion: _apiVersion),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -47,9 +108,11 @@ class MyApp extends StatelessWidget {
 }
 
 class AddressAutocompleteTextFieldExample extends StatefulWidget {
-  const AddressAutocompleteTextFieldExample({super.key, required this.title});
+  const AddressAutocompleteTextFieldExample(
+      {super.key, required this.title, required this.apiVersion});
 
   final String title;
+  final PlacesApiVersion apiVersion;
 
   @override
   State<AddressAutocompleteTextFieldExample> createState() =>
@@ -160,6 +223,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 60,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('zip-${widget.apiVersion}'),
+                  apiVersion: widget.apiVersion,
                   type: AutoCompleteType.postalCode,
                   keyboardType: TextInputType.number,
                   maxLength: 5,
@@ -220,6 +285,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 60,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('cities-${widget.apiVersion}'),
+                  apiVersion: widget.apiVersion,
                   type: AutoCompleteType.cities,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(
@@ -276,6 +343,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 60,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('establishment-${widget.apiVersion}'),
+                  apiVersion: widget.apiVersion,
                   type: AutoCompleteType.establishment,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(
@@ -332,6 +401,8 @@ class _AddressAutocompleteTextFieldExampleState
               SizedBox(
                 height: 40,
                 child: AddressAutocompleteTextField(
+                  key: ValueKey('address-${widget.apiVersion}'),
+                  apiVersion: widget.apiVersion,
                   // create a `privatekeys.dart` file and add your API key there
                   //   `const GOOGLE_MAPS_ACCOUNT_API_KEY = 'YourGoogleMapsApiKey_XXXXyyyzzzz';`
                   // the .gitignore file is set so this does not go into source repository.
@@ -422,7 +493,10 @@ class _AddressAutocompleteTextFieldExampleState
 }
 
 class AddressAutocompleteTextFormFieldExample extends StatefulWidget {
-  const AddressAutocompleteTextFormFieldExample({super.key});
+  const AddressAutocompleteTextFormFieldExample(
+      {super.key, required this.apiVersion});
+
+  final PlacesApiVersion apiVersion;
 
   @override
   State<AddressAutocompleteTextFormFieldExample> createState() =>
@@ -589,8 +663,10 @@ class _AddressAutocompleteTextFormFieldExampleState
               children: <Widget>[
                 const LeftAlignedLabelRow('Address'),
                 AddressAutocompleteTextFormField(
+                  key: ValueKey('formfield-address-${widget.apiVersion}'),
                   // following args specific to AddressAutocompleteTextFormField()
                   mapsApiKey: GOOGLE_MAPS_ACCOUNT_API_KEY,
+                  apiVersion: widget.apiVersion,
                   debounceTime: 200,
                   //In practice this does not seem to help United States address//prepareQuery: prepareQuery,
                   onClearClick: onClearClick,

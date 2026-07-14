@@ -1,0 +1,13 @@
+{
+  "_instructions": [
+    "Copy this file to test/private_keys.json (git-ignored) and fill in your keys.",
+    "newPlacesApiKey: an API key whose project has 'Places API (New)' enabled.",
+    "legacyPlacesApiKey: an API key whose project has the legacy 'Places API' enabled.",
+    "The same key works for both entries if its project has both APIs enabled.",
+    "Leave an entry as an empty string to skip that backend's live tests.",
+    "Then run: flutter test test/live_api_smoke_test.dart",
+    "(For the example app, the key goes in example/lib/privatekeys.dart instead.)"
+  ],
+  "newPlacesApiKey": "",
+  "legacyPlacesApiKey": ""
+}

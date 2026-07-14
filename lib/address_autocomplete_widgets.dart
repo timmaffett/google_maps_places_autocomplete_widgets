@@ -10,3 +10,5 @@ export 'package:google_maps_places_autocomplete_widgets/widgets/address_autocomp
 export 'package:google_maps_places_autocomplete_widgets/widgets/address_autocomplete_textformfield.dart';
 export 'package:google_maps_places_autocomplete_widgets/model/place.dart';
 export 'package:google_maps_places_autocomplete_widgets/model/suggestion.dart';
+export 'package:google_maps_places_autocomplete_widgets/api/place_api_provider.dart';
+export 'package:google_maps_places_autocomplete_widgets/api/places_api_version.dart';
