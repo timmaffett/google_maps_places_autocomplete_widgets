@@ -1,5 +1,25 @@
 # google_maps_places_autocomplete_widgets package
 
+## 2.0.0
+
+* **Places API (New) is now the default backend** (`places.googleapis.com/v1`).
+  The legacy Places API was set to legacy status by Google on 2025-03-01 and
+  cannot be enabled on new Cloud projects. Pass
+  `apiVersion: PlacesApiVersion.legacy` to keep using the legacy API where it
+  is still enabled. See MIGRATION.md.
+* NEW: `placeApiProvider` widget parameter + public abstract
+  `PlaceApiProvider` — inject a custom backend (backend proxy, native SDK
+  wrapper, or test fake).
+* NEW: `androidPackageName`, `androidCertSha1Fingerprint`, `iosBundleId`
+  widget parameters — support application-restricted API keys over REST.
+* Behavior on the new backend: `Suggestion.terms` is `null`;
+  `AutoCompleteType.address` is translated to
+  `street_address`/`premise`/`subpremise` (no `address` filter in the new API).
+* BREAKING (internal): the concrete class formerly named `PlaceApiProvider`
+  (not exported from the barrel) is now `LegacyPlaceApiProvider`.
+* Removed stray debugPrint logging from the overlay mixin.
+* Example app: runtime toggle between the two backends.
+
 ## 1.3.3
 
 * Fix dart analyze warning about using deprecated postalCodeLookup (which we use internally to allow it to continue to work

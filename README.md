@@ -6,6 +6,13 @@ Just rename `TextField` -> `AddressAutocompleteTextField`,
 (or `TextFormField` -> `AddressAutocompleteTextFormField`),
 and add your `mapsApiKey:'YOUR_GOOGLE_MAPS_API_KEY'` as the only required additional parameter.
 
+As of v2.0.0 the widgets use **Places API (New)** by default (the legacy
+Places API cannot be enabled on new Google Cloud projects). Make sure
+["Places API (New)"](https://console.cloud.google.com/apis/library/places.googleapis.com)
+is enabled for your API key's project. Existing 1.x users: see
+[MIGRATION.md](MIGRATION.md) — for most apps no code changes are needed. To
+temporarily keep using the legacy API, pass `apiVersion: PlacesApiVersion.legacy`.
+
 If desired customize any look/behavior of the autocompletion using the additional optional parameters.
 
 Additionally any of the other Google Places autocomplete information can be retrieved.
@@ -31,6 +38,14 @@ Easily incorporated into existing forms which contain multiple fields for captur
 
 ## Features
 
+- Uses Google **Places API (New)** by default; the legacy Places API remains
+  available via `apiVersion: PlacesApiVersion.legacy`.
+- Supports application-restricted API keys via `androidPackageName`,
+  `androidCertSha1Fingerprint` and `iosBundleId` (sent as Google's
+  `X-Android-Package` / `X-Android-Cert` / `X-Ios-Bundle-Identifier` headers).
+- Pluggable backend: implement the public `PlaceApiProvider` abstract class
+  and pass it as `placeApiProvider:` to use your own proxy/native backend
+  (also handy as a fake in widget tests).
 - Support for most common `TextField` and `TextFormField` parameters (and any
   less common parameter can easily be added).
 - Support for both address and postal/zip code autocompletion. (`type:AutoCompleteType.address` or `type:AutoCompleteType.postalCode`)
@@ -118,6 +133,16 @@ void onSuggestionClick(Place placeDetails) {
     });
   }
 ```
+
+### Notes when using Places API (New) (the default)
+
+- The legacy `address` type filter has no equivalent in the new API;
+  `AutoCompleteType.address` (the default) is translated to
+  `street_address` + `premise` + `subpremise`. Use
+  `type: AutoCompleteType.geocode` for broader geocoding matches.
+- `Suggestion.terms` is always `null` (no new-API equivalent).
+- See [MIGRATION.md](MIGRATION.md) for key-restriction setup and custom
+  `placeApiProvider` backends.
 
 ## More complex use and customization examples
 

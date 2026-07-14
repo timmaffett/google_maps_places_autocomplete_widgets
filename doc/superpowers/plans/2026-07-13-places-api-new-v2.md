@@ -8,7 +8,7 @@
 
 **Tech Stack:** Flutter/Dart 3 (SDK `>=3.0.0 <4.0.0`), `http` ^1.1.0 (includes `package:http/testing.dart` `MockClient` — no new dependencies), `uuid`, `flutter_test`.
 
-**Spec:** `docs/superpowers/specs/2026-07-13-places-api-new-design.md` — read it first.
+**Spec:** `doc/superpowers/specs/2026-07-13-places-api-new-design.md` — read it first.
 
 ## Global Constraints
 
