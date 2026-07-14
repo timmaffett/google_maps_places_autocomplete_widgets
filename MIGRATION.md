@@ -40,6 +40,17 @@ months notice before turning the legacy API off, but no new features.
   string. `type`/`types` rules (max 5, collections alone) are unchanged.
 - Error message text now comes from the new API's error format.
 
+## Flutter web support (new capability)
+
+The new backend **works on Flutter web**: `places.googleapis.com` sends CORS
+headers, so browsers can call it directly (verified 2026-07 with the example
+app). Use an HTTP-referrer-restricted API key for web builds.
+
+The legacy backend has **never** worked on the web — browsers block
+`maps.googleapis.com/maps/api/place/*` responses (no CORS headers) and every
+request fails with `ClientException: Failed to fetch`. On web you must use
+the new API (or a backend proxy via `placeApiProvider`).
+
 ## Securing your API key (new capability)
 
 Places API (New) honors **application-restricted** API keys over REST. If your

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
@@ -68,6 +69,23 @@ class _MyAppState extends State<MyApp> {
                         }
                       },
                     ),
+                    if (kIsWeb && _apiVersion == PlacesApiVersion.legacy)
+                      const Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text(
+                            'The legacy Places API WILL NOT WORK on the web '
+                            'platform: browsers block its REST endpoint '
+                            '(maps.googleapis.com sends no CORS headers, so '
+                            'every request fails with "Failed to fetch"). '
+                            'Use Places API (New) on web.',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),

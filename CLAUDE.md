@@ -67,8 +67,11 @@ Design spec: `doc/superpowers/specs/2026-07-13-places-api-new-design.md` (full l
 wire mapping); implementation plan: `doc/superpowers/plans/2026-07-13-places-api-new-v2.md`;
 user-facing migration guide: `MIGRATION.md`.
 
-Open item: verify whether Flutter web can call the new REST API directly (legacy REST was
-blocked by CORS in browsers) — see the smoke checklist in the implementation plan.
+Web: CONFIRMED 2026-07-14 (example app on Chrome) — the new API works on Flutter web
+(`places.googleapis.com` sends CORS headers); the legacy API does not (browser blocks it,
+`ClientException: Failed to fetch`). The example shows a red warning when Legacy is
+selected on web (`kIsWeb`). Both backends also live-verified via
+`test/live_api_smoke_test.dart` with a real key (identical parsed Place from both).
 
 ## Quirks & conventions
 

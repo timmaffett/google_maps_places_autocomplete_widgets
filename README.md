@@ -46,6 +46,9 @@ Easily incorporated into existing forms which contain multiple fields for captur
 - Pluggable backend: implement the public `PlaceApiProvider` abstract class
   and pass it as `placeApiProvider:` to use your own proxy/native backend
   (also handy as a fake in widget tests).
+- **Flutter web now works** (with the default new API): `places.googleapis.com`
+  supports CORS, so browsers can call it directly — use a referrer-restricted
+  key. The legacy API never worked on web (its endpoint sends no CORS headers).
 - Support for most common `TextField` and `TextFormField` parameters (and any
   less common parameter can easily be added).
 - Support for both address and postal/zip code autocompletion. (`type:AutoCompleteType.address` or `type:AutoCompleteType.postalCode`)

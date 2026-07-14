@@ -18,7 +18,10 @@
 * BREAKING (internal): the concrete class formerly named `PlaceApiProvider`
   (not exported from the barrel) is now `LegacyPlaceApiProvider`.
 * Removed stray debugPrint logging from the overlay mixin.
-* Example app: runtime toggle between the two backends.
+* NEW: Flutter **web** works with the new backend (`places.googleapis.com`
+  supports CORS; the legacy endpoint never did — use a referrer-restricted key).
+* Example app: dropdown to select the Places API backend at runtime (with a
+  warning that the legacy API cannot work on web).
 
 ## 1.3.3
 
