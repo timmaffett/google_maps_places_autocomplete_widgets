@@ -1,3 +1,1 @@
-// Placeholder barrel — replaced in Task 3 with the NativePlaceApiProvider
-// exports.
-library;
+export 'src/native_place_api_provider.dart';
