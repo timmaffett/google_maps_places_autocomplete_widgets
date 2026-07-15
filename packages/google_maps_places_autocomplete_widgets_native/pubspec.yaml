@@ -1,0 +1,36 @@
+name: google_maps_places_autocomplete_widgets_native
+description: Native Places SDK (Android/iOS) backend for google_maps_places_autocomplete_widgets — app-restricted API keys and Firebase App Check support.
+version: 1.0.0
+homepage: https://github.com/timmaffett/google_maps_places_autocomplete_widgets
+repository: https://github.com/timmaffett/google_maps_places_autocomplete_widgets/tree/main/packages/google_maps_places_autocomplete_widgets_native
+issue_tracker: https://github.com/timmaffett/google_maps_places_autocomplete_widgets/issues
+
+topics:
+  - autocomplete
+  - google-places
+  - app-check
+  - places-sdk
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_maps_places_autocomplete_widgets: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  pigeon: ^25.3.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.timmaffett.google_maps_places_autocomplete_widgets_native
+        pluginClass: PlacesNativePlugin
+      ios:
+        pluginClass: PlacesNativePlugin
