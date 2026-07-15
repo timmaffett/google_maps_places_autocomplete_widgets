@@ -17,13 +17,14 @@ class AddressService {
     String? androidPackageName,
     String? androidCertSha1Fingerprint,
     String? iosBundleId,
-  }) {
+  })  : assert(mapsApiKey != null || placeApiProvider != null,
+            'mapsApiKey is required unless a custom placeApiProvider is supplied') {
     apiClient = placeApiProvider ??
         switch (apiVersion) {
           PlacesApiVersion.legacy => LegacyPlaceApiProvider(
-              sessionToken, mapsApiKey, componentCountry, language),
+              sessionToken, mapsApiKey!, componentCountry, language),
           PlacesApiVersion.placesApiNew => NewPlaceApiProvider(
-              sessionToken, mapsApiKey, componentCountry, language,
+              sessionToken, mapsApiKey!, componentCountry, language,
               androidPackageName: androidPackageName,
               androidCertSha1Fingerprint: androidCertSha1Fingerprint,
               iosBundleId: iosBundleId),
@@ -31,7 +32,9 @@ class AddressService {
   }
 
   final String sessionToken;
-  final String mapsApiKey;
+
+  /// Required unless a custom [PlaceApiProvider] was supplied.
+  final String? mapsApiKey;
   final String? componentCountry;
   final String? language;
   late PlaceApiProvider apiClient;

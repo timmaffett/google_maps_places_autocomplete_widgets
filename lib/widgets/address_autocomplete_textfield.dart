@@ -48,9 +48,10 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
   @override
   final String? Function(Place place)? onSuggestionClickGetTextToUseForControl;
 
-  ///Your Google Maps API key, this is required.
+  /// Your Google Maps API key. Required unless [placeApiProvider] is
+  /// supplied.
   @override
-  final String mapsApiKey;
+  final String? mapsApiKey;
 
   @override
   final PlacesApiVersion apiVersion;
@@ -201,7 +202,7 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
 
   const AddressAutocompleteTextField({
     super.key,
-    required this.mapsApiKey,
+    this.mapsApiKey,
     this.apiVersion = PlacesApiVersion.placesApiNew,
     this.placeApiProvider,
     this.androidPackageName,
@@ -250,7 +251,9 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
     this.maxLength,
     this.maxLengthEnforcement,
     this.onChanged,
-  }) : assert(
+  }) : assert(mapsApiKey != null || placeApiProvider != null,
+            'mapsApiKey is required unless a custom placeApiProvider is supplied'),
+       assert(
             (postalCodeLookup == true && type == null && types == null) ||
                 (postalCodeLookup == false && type == null && types == null) ||
                 (postalCodeLookup == null && type == null && types == null) ||

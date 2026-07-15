@@ -1,7 +1,8 @@
 # Google_Maps_Places_Autocomplete_Widgets
 
 Feature complete, 'drop in' replacements for Flutter `TextField` or `TextFormField` widgets, providing address autocompletion using the Google Maps Places API.
-The only required additional parameter is your Google Maps API key.
+The only required additional parameter is your Google Maps API key
+(or omit it entirely and supply your own `placeApiProvider` backend).
 Just rename `TextField` -> `AddressAutocompleteTextField`,
 (or `TextFormField` -> `AddressAutocompleteTextFormField`),
 and add your `mapsApiKey:'YOUR_GOOGLE_MAPS_API_KEY'` as the only required additional parameter.
