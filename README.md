@@ -44,6 +44,10 @@ Easily incorporated into existing forms which contain multiple fields for captur
 - Supports application-restricted API keys via `androidPackageName`,
   `androidCertSha1Fingerprint` and `iosBundleId` (sent as Google's
   `X-Android-Package` / `X-Android-Cert` / `X-Ios-Bundle-Identifier` headers).
+  For the strongest client-side key protection (native SDK identity + optional
+  Firebase App Check attestation) use the companion package
+  [`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native)
+  on Android/iOS.
 - Pluggable backend: implement the public `PlaceApiProvider` abstract class
   and pass it as `placeApiProvider:` to use your own proxy/native backend
   (also handy as a fake in widget tests).
