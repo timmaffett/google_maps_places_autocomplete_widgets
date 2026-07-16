@@ -25,13 +25,15 @@ dependencies:
     # the parent directory to use the current plugin's version.
     path: ../
 
+  # The core widgets package this plugin provides a backend for. (During
+  # development it is resolved from this repo via pubspec_overrides.yaml.)
+  google_maps_places_autocomplete_widgets: ^2.1.0
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
-  integration_test:
-    sdk: flutter
   flutter_test:
     sdk: flutter
 

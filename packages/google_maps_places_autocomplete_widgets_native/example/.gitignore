@@ -1,3 +1,6 @@
+# Private API keys (copy lib/privatekeys.dart.template to lib/privatekeys.dart)
+lib/privatekeys.dart
+
 # Miscellaneous
 *.class
 *.log

@@ -1,0 +1,4 @@
+// Copy this file to `privatekeys.dart` (same directory) and fill in your key.
+// `privatekeys.dart` is git-ignored so your key never lands in the repo.
+// ignore: constant_identifier_names
+const GOOGLE_MAPS_ACCOUNT_API_KEY = 'PUT-YOUR-KEY-HERE';
