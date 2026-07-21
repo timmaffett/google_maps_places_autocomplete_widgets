@@ -5,6 +5,12 @@
 * `mapsApiKey` is now optional when a custom `placeApiProvider` is supplied
   (previously callers had to pass a dummy value). It remains required for the
   built-in backends (enforced by assert).
+* NEW companion package
+  [`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native)
+  (v1.0.0, in `packages/` of this repo): a `PlaceApiProvider` backed by the
+  native Places SDKs (Android/iOS) with app-restricted API key support and
+  opt-in Firebase App Check attestation — verified end-to-end on real devices
+  with App Check enforcement enabled.
 
 ## 2.0.0
 

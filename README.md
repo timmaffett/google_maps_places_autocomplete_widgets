@@ -75,7 +75,7 @@ Easily incorporated into existing forms which contain multiple fields for captur
 
 ## Usage
 
-You can find a complete example of usage in `example/main.dart`.
+You can find a complete example of usage in `example/lib/main.dart`.
 
 import the package:
 
@@ -141,6 +141,25 @@ void onSuggestionClick(Place placeDetails) {
     });
   }
 ```
+
+### Using the native Places SDK backend (Android/iOS)
+
+For app-restricted API keys with zero header configuration — and optional
+**Firebase App Check** attestation that makes a scraped key useless outside
+your genuine app — add the companion package
+[`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native)
+and inject its provider (no `mapsApiKey:` needed on the widget):
+
+```dart
+await NativePlaceApiProvider.initialize(mapsApiKey: yourKey); // once, at startup
+
+AddressAutocompleteTextField(
+  placeApiProvider: NativePlaceApiProvider(componentCountry: 'us'),
+  onSuggestionClick: onSuggestionClick,
+),
+```
+
+See that package's README for setup and the full App Check walkthrough.
 
 ### Notes when using Places API (New) (the default)
 
