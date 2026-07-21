@@ -1,0 +1,57 @@
+# Pub-publish exclusions for the example app.
+# NOTE: this file OVERRIDES example/.gitignore for `dart pub publish`, so it
+# must repeat the .gitignore entries and add pub-only exclusions.
+
+# Pub-only: the local-dev path override is meaningless (and harmful) in the
+# published package — without this line it would ship and break `pub get`
+# for anyone opening the example from the pub cache.
+pubspec_overrides.yaml
+
+# Private API keys (copy lib/privatekeys.dart.template to lib/privatekeys.dart)
+lib/privatekeys.dart
+
+# Firebase config (contains your Firebase project id — bring your own,
+# see the package README's App Check walkthrough)
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
