@@ -1,3 +1,6 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
 import 'package:google_maps_places_autocomplete_widgets_native/google_maps_places_autocomplete_widgets_native.dart';
@@ -9,6 +12,19 @@ const useAppCheck = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (useAppCheck) {
+    await Firebase.initializeApp();
+    // Debug providers so emulators/simulators can attest; real apps use
+    // AndroidProvider.playIntegrity / AppleProvider.appAttest in release.
+    await FirebaseAppCheck.instance.activate(
+      providerAndroid: kDebugMode
+          ? const AndroidDebugProvider()
+          : const AndroidPlayIntegrityProvider(),
+      providerApple: kDebugMode
+          ? const AppleDebugProvider()
+          : const AppleAppAttestProvider(),
+    );
+  }
   await NativePlaceApiProvider.initialize(
       mapsApiKey: GOOGLE_MAPS_ACCOUNT_API_KEY, useAppCheck: useAppCheck);
   runApp(const MyApp());

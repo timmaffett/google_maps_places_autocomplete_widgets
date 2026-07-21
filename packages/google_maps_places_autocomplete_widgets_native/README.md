@@ -87,8 +87,14 @@ require a valid attestation token from *your genuine app*, so a key scraped
 from your binary or network traffic is worthless. Steps:
 
 1. **Create (or reuse) a Firebase project** at
-   [console.firebase.google.com](https://console.firebase.google.com), linked
-   to the same Google Cloud project that owns your Places API key.
+   [console.firebase.google.com](https://console.firebase.google.com) —
+   **it MUST be the same Google Cloud project that owns your Places API key.**
+   App Check tokens are project-scoped: if Firebase lives in a different
+   project than the key, enforcement will reject your app's tokens as
+   invalid and App Check metrics will never appear. In the "Create a
+   project" flow, *select your existing Cloud project from the name
+   field's dropdown* — typing a new name silently creates a separate
+   project.
 2. **Register your apps**: add your Android app (package name **and SHA-256**
    fingerprint) and your iOS app (bundle id).
 3. **Add the config files** to your host app: `android/app/google-services.json`
@@ -106,8 +112,8 @@ from your binary or network traffic is worthless. Steps:
    ```dart
    await Firebase.initializeApp();
    await FirebaseAppCheck.instance.activate(
-     androidProvider: AndroidProvider.playIntegrity,
-     appleProvider: AppleProvider.appAttest,
+     providerAndroid: const AndroidPlayIntegrityProvider(),
+     providerApple: const AppleAppAttestProvider(),
    );
    await NativePlaceApiProvider.initialize(
      mapsApiKey: yourKey,
@@ -123,10 +129,25 @@ from your binary or network traffic is worthless. Steps:
 8. **Verify**: a raw `curl` against `places.googleapis.com` with your key
    should now be rejected, while your app keeps working.
 
-Debug builds: use `AndroidProvider.debug` / `AppleProvider.debug` and add the
+Debug builds: use `AndroidDebugProvider()` / `AppleDebugProvider()` and add the
 printed debug token in the Firebase console (App Check → Apps → Manage debug
 tokens), otherwise emulator/simulator traffic is rejected once enforcement is
-on.
+on. Debug secrets are stored per app install *per Firebase project* — if you
+re-point `google-services.json` at a different project, a new secret is
+minted and must be registered.
+
+Troubleshooting:
+
+- **`ExchangeDebugToken ... blocked` / App Check token fetch fails with 403**:
+  the API key in your `google-services.json` has API restrictions that don't
+  include Firebase. Add **Firebase App Check API** and **Firebase
+  Installations API** to that key's allowed APIs (Cloud console →
+  Credentials). This commonly happens when Firebase reuses an existing
+  Android-restricted key that was locked down to Places API (New) only.
+- **"Firebase App Check token is invalid" under enforcement, even from your
+  real app**: your Firebase project and your API key's Cloud project are not
+  the same project (see step 1).
+- Enforcement changes take a few minutes to propagate (~2–8 min observed).
 
 ## Platform support
 

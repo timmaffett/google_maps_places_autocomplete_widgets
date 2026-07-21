@@ -47,7 +47,12 @@ class PlacesNativePlugin : FlutterPlugin, PlacesNativeApi {
       FirebaseAppCheck.getInstance()
           .getAppCheckToken(false)
           .addOnSuccessListener { future.set(it.token) }
-          .addOnFailureListener { future.setException(it) }
+          .addOnFailureListener {
+            // Surfaced at warning level: with enforcement on this is the
+            // difference between working and rejected requests.
+            android.util.Log.w("PlacesNativePlugin", "App Check token fetch failed", it)
+            future.setException(it)
+          }
       return future
     }
   }

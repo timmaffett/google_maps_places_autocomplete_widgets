@@ -1,6 +1,11 @@
 # Private API keys (copy lib/privatekeys.dart.template to lib/privatekeys.dart)
 lib/privatekeys.dart
 
+# Firebase config (contains your Firebase project id — bring your own,
+# see the package README's App Check walkthrough)
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+
 # Miscellaneous
 *.class
 *.log

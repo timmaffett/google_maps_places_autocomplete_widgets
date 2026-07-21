@@ -4,6 +4,14 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// Google Services (Firebase) is only wired in when its config file is present,
+// so the example builds out of the box without a Firebase project. To try the
+// App Check demo, add your own google-services.json here (see package README)
+// and set useAppCheck = true in lib/main.dart.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 android {
     namespace = "com.timmaffett.google_maps_places_autocomplete_widgets_native_example"
     compileSdk = flutter.compileSdkVersion
