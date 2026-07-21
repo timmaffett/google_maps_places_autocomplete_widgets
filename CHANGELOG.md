@@ -1,5 +1,10 @@
 # google_maps_places_autocomplete_widgets package
 
+## 2.1.1
+
+* Add missing type annotation flagged by pub.dev static analysis (no
+  functional change).
+
 ## 2.1.0
 
 * `mapsApiKey` is now optional when a custom `placeApiProvider` is supplied

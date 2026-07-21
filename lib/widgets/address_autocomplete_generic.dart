@@ -384,7 +384,7 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
     return const InputDecoration();
   }
 
-  void onTextChanges(text) async {
+  void onTextChanges(String text) async {
     if (debounceTimer?.isActive ?? false) debounceTimer!.cancel();
     debounceTimer =
         Timer(Duration(milliseconds: widget.debounceTime), () async {
