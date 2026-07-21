@@ -1,5 +1,11 @@
 # google_maps_places_autocomplete_widgets package
 
+## 2.1.0
+
+* `mapsApiKey` is now optional when a custom `placeApiProvider` is supplied
+  (previously callers had to pass a dummy value). It remains required for the
+  built-in backends (enforced by assert).
+
 ## 2.0.0
 
 * **Places API (New) is now the default backend** (`places.googleapis.com/v1`).

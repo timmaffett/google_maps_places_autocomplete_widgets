@@ -1,0 +1,3 @@
+dependency_overrides:
+  google_maps_places_autocomplete_widgets:
+    path: ../../

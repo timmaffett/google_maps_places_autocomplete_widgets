@@ -59,4 +59,29 @@ void main() {
     expect(tester.widget<TextField>(find.byType(TextField)).controller!.text,
         '123 Fake Street, Springfield');
   });
+
+  testWidgets('mapsApiKey can be omitted when placeApiProvider is supplied',
+      (tester) async {
+    final fake = FakePlaceApiProvider();
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: AddressAutocompleteTextField(
+          placeApiProvider: fake,
+          debounceTime: 20,
+        ),
+      ),
+    ));
+    await tester.tap(find.byType(TextField));
+    await tester.pump();
+    await tester.enterText(find.byType(TextField), '123');
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump();
+    expect(fake.suggestionQueries, ['123']);
+  });
+
+  test('assert fires when neither mapsApiKey nor placeApiProvider supplied',
+      () {
+    expect(() => AddressAutocompleteTextField(), throwsAssertionError);
+    expect(() => AddressAutocompleteTextFormField(), throwsAssertionError);
+  });
 }

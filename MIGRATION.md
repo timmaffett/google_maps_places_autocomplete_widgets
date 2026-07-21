@@ -69,9 +69,11 @@ AddressAutocompleteTextField(
 Honest security note: these values are public information, so they deter
 key-scraping and accidental reuse rather than determined attackers. Pair them
 with API restrictions and quota caps. For cryptographic app attestation
-(Firebase App Check) you need Google's native Places SDKs — reachable from
-this package by injecting a custom provider (below). The strongest option
-remains a backend proxy that keeps the key server side.
+(Firebase App Check) you need Google's native Places SDKs — available
+ready-made as the companion package
+[`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native)
+(Android/iOS), or via your own injected provider (below). The strongest
+option remains a backend proxy that keeps the key server side.
 
 ## Custom backends: `placeApiProvider`
 

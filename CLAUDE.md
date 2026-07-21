@@ -6,6 +6,23 @@ with Google Places address autocompletion. Published on pub.dev. Since v2.0.0 th
 backend is **Places API (New)** (`places.googleapis.com/v1`); the legacy Places API remains
 available via `apiVersion: PlacesApiVersion.legacy` (1.3.x line was legacy-only).
 
+## Repo layout (monorepo since 2.1.0)
+
+Two pub.dev packages live in this repo:
+
+- **Root** — the core widgets package (this file's main subject; pure Dart).
+- **`packages/google_maps_places_autocomplete_widgets_native/`** — Pigeon-based
+  Flutter plugin (Android Kotlin + iOS Swift) providing `NativePlaceApiProvider`,
+  a `PlaceApiProvider` backed by the native Places SDKs with opt-in Firebase App
+  Check. Local dev resolves the core package via `pubspec_overrides.yaml` path
+  overrides (in the plugin AND its example; never published). Pigeon definitions
+  in `pigeons/messages.dart`; regenerate with `dart run pigeon --input
+  pigeons/messages.dart`. Plugin commands run from its directory (`flutter
+  analyze`, `flutter test`, `cd example && flutter build apk --debug`).
+  Publish order: core first, then native (its `^` dep must be satisfiable).
+  Spec: `doc/superpowers/specs/2026-07-14-native-provider-design.md`; plan:
+  `doc/superpowers/plans/2026-07-14-native-provider.md`.
+
 ## Commands
 
 - `flutter analyze` — lint (uses `flutter_lints`)

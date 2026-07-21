@@ -43,8 +43,10 @@ abstract class AddresssAutocompleteStatefulWidget extends StatefulWidget {
   abstract final String? Function(Place place)?
       onSuggestionClickGetTextToUseForControl;
 
-  ///your maps api key, must not be null
-  abstract final String mapsApiKey;
+  /// Your Google Maps API key. Required unless a custom [placeApiProvider]
+  /// is supplied (in which case the built-in backends — and this key — are
+  /// not used).
+  abstract final String? mapsApiKey;
 
   /// Which Google Places backend to use. Defaults to
   /// [PlacesApiVersion.placesApiNew]; pass [PlacesApiVersion.legacy] to keep
