@@ -73,6 +73,52 @@ Easily incorporated into existing forms which contain multiple fields for captur
 - The base classes and mixin generics provided in this package allow for the addition
   of address autocompletion to virtually any of custom widgets.
 
+## Securing your Google Maps API key
+
+Any API key that ships inside an app binary or web page can be extracted —
+from an APK/IPA, from browser dev tools, or by sniffing traffic — and a
+leaked Places key can be abused to run up **your** bill. Places API (New)
+gives you escalating levels of protection, all supported by this package
+family:
+
+| | Approach | Platforms | Protection |
+|---|----------|-----------|-----------|
+| 1 | Restricted key + this package's `androidPackageName:` / `androidCertSha1Fingerprint:` / `iosBundleId:` parameters (sent as Google's restriction headers over REST) | all | **Deterrent only** — these header values are public information, so they stop key-scraping bots and accidental reuse, not determined attackers |
+| 2 | [`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native) — the companion package backing these same widgets with Google's **native Places SDKs** | Android, iOS | The SDK attaches your app's identity (package + signing cert / bundle id) itself, so **app-restricted keys work with zero configuration** and can't be borrowed by simply copying headers |
+| 3 | The native package with **Firebase App Check** enabled (`useAppCheck: true`) | Android, iOS | **Cryptographic app attestation** (Play Integrity / App Attest). With enforcement turned on, Google rejects every request that doesn't come from your genuine app — a scraped or leaked key becomes useless |
+| 4 | Your own backend proxy injected via `placeApiProvider:` | all | **Strongest**: the key lives on your server and never ships to clients at all |
+
+On **web**, use an HTTP-referrer-restricted key (the browser itself
+enforces nothing — tier 4 is the only strong option there). Whatever the
+tier, also set **API restrictions** (key valid only for Places API (New))
+and quota caps in the Cloud console.
+
+### Using the native Places SDK backend (Android/iOS)
+
+The companion package drops into the same widgets — initialize once at
+startup and inject its provider (no `mapsApiKey:` on the widget at all,
+since core 2.1.0):
+
+```dart
+await NativePlaceApiProvider.initialize(
+  mapsApiKey: yourKey,
+  useAppCheck: true, // opt-in Firebase App Check attestation (tier 3)
+);
+
+AddressAutocompleteTextField(
+  placeApiProvider: NativePlaceApiProvider(componentCountry: 'us'),
+  onSuggestionClick: onSuggestionClick,
+),
+```
+
+Everything else about the widgets — callbacks, styling, the parsed `Place`
+results — is identical on either backend. See
+[that package's README](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native)
+for platform setup and a step-by-step App Check walkthrough (Firebase
+project, debug tokens, monitoring, and flipping on enforcement). The full
+flow — including a leaked key being rejected under enforcement while the
+real app keeps working — has been verified end-to-end on physical devices.
+
 ## Usage
 
 You can find a complete example of usage in `example/lib/main.dart`.
@@ -141,25 +187,6 @@ void onSuggestionClick(Place placeDetails) {
     });
   }
 ```
-
-### Using the native Places SDK backend (Android/iOS)
-
-For app-restricted API keys with zero header configuration — and optional
-**Firebase App Check** attestation that makes a scraped key useless outside
-your genuine app — add the companion package
-[`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native)
-and inject its provider (no `mapsApiKey:` needed on the widget):
-
-```dart
-await NativePlaceApiProvider.initialize(mapsApiKey: yourKey); // once, at startup
-
-AddressAutocompleteTextField(
-  placeApiProvider: NativePlaceApiProvider(componentCountry: 'us'),
-  onSuggestionClick: onSuggestionClick,
-),
-```
-
-See that package's README for setup and the full App Check walkthrough.
 
 ### Notes when using Places API (New) (the default)
 
