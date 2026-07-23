@@ -1,5 +1,16 @@
 # google_maps_places_autocomplete_widgets package
 
+## 2.1.2
+
+* Fix: `Place.zipCodePlus4` is now `null` when the result has no postal code
+  (previously it contained the literal text "null").
+* Fix: `Suggestion.toString()` printed the `secondary_text` value based on
+  whether `mainText` was null.
+* README: new "Securing your Google Maps API key" section — the protection
+  tiers from restriction headers to the native SDK companion package
+  ([`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native))
+  with Firebase App Check attestation, to a backend proxy.
+
 ## 2.1.1
 
 * Add missing type annotation flagged by pub.dev static analysis (no

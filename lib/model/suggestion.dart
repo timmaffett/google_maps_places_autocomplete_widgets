@@ -10,6 +10,6 @@ class Suggestion {
 
   @override
   String toString() {
-    return "Suggestion(description:'$description', placeId:'$placeId', main_text:${mainText == null ? 'null' : "'$mainText'"}, secondary_text:${mainText == null ? 'null' : "'$secondaryText'"}, terms:${terms == null ? 'null' : terms.toString()}, types:${types == null ? 'null' : types.toString()})";
+    return "Suggestion(description:'$description', placeId:'$placeId', main_text:${mainText == null ? 'null' : "'$mainText'"}, secondary_text:${secondaryText == null ? 'null' : "'$secondaryText'"}, terms:${terms == null ? 'null' : terms.toString()}, types:${types == null ? 'null' : types.toString()})";
   }
 }

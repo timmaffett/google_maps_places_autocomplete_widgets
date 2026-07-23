@@ -66,8 +66,10 @@ Place buildPlaceFromComponents({
     }
   }
 
-  place.zipCodePlus4 ??=
-      '${place.zipCode}${place.zipCodeSuffix != null ? '-${place.zipCodeSuffix}' : ''}';
+  if (place.zipCode != null) {
+    place.zipCodePlus4 ??=
+        '${place.zipCode}${place.zipCodeSuffix != null ? '-${place.zipCodeSuffix}' : ''}';
+  }
   if (place.streetNumber != null) {
     place.streetAddress ??= '${place.streetNumber} ${place.streetShort}';
     place.formattedAddress ??=

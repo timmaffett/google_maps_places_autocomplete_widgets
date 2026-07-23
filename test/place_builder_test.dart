@@ -86,6 +86,19 @@ void main() {
     expect(place.formattedAddressZipPlus4, isNull);
   });
 
+  test('zipCodePlus4 stays null when there is no postal_code (no "null" text)',
+      () {
+    final place = buildPlaceFromComponents(
+      components: components
+          .where((c) =>
+              !c.types.contains('postal_code') &&
+              !c.types.contains('postal_code_suffix'))
+          .toList(),
+    );
+    expect(place.zipCode, isNull);
+    expect(place.zipCodePlus4, isNull);
+  });
+
   test('maps sublocality to vicinity', () {
     final place = buildPlaceFromComponents(components: [
       const RawAddressComponent(

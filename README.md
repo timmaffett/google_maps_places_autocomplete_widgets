@@ -1,5 +1,13 @@
 # Google_Maps_Places_Autocomplete_Widgets
 
+> **Three interchangeable Google Places backends — same widgets, same results:**
+>
+> - ✅ **Places API (New)** *(default)* — modern REST API, works on **every platform including Flutter web**
+> - ✅ **Legacy Places API** — one parameter (`apiVersion: PlacesApiVersion.legacy`) for older Cloud projects where it is still enabled
+> - ✅ **Native Places SDKs for Android/iOS** — via the companion package [`google_maps_places_autocomplete_widgets_native`](https://pub.dev/packages/google_maps_places_autocomplete_widgets_native): app-restricted API keys with **zero configuration**, plus optional **Firebase App Check** attestation so a leaked or scraped key **cannot be abused outside your genuine app**
+>
+> …or inject any custom backend (e.g. a key-hiding server proxy) via `placeApiProvider:`.
+
 Feature complete, 'drop in' replacements for Flutter `TextField` or `TextFormField` widgets, providing address autocompletion using the Google Maps Places API.
 The only required additional parameter is your Google Maps API key
 (or omit it entirely and supply your own `placeApiProvider` backend).
@@ -207,8 +215,10 @@ multiple other TextFormFields from the user's selected address suggestion.
 
 ## Additional information
 
-This package implements the official documentation of Google Maps Places API
-and use address as types and receive a detail with address_component and geometry as fields only
+This package follows the official Google Maps Places API documentation. The
+autocomplete requests use your chosen `type`/`types` filters (defaulting to
+address results) and the details request retrieves the address components,
+formatted address and location used to populate the returned `Place`.
 
 GitHub Repo: [https://github.com/timmaffett/google_maps_places_autocomplete_widgets]( https://github.com/timmaffett/google_maps_places_autocomplete_widgets)
 
