@@ -75,6 +75,9 @@ ready-made as the companion package
 (Android/iOS), or via your own injected provider (below). The strongest
 option remains a backend proxy that keeps the key server side.
 
+To convert an existing app to the native backend, follow the dedicated
+step-by-step guide: [MIGRATION_NATIVE.md](MIGRATION_NATIVE.md).
+
 ## Custom backends: `placeApiProvider`
 
 `PlaceApiProvider` is now a public abstract class. Inject your own

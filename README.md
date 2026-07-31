@@ -127,6 +127,12 @@ project, debug tokens, monitoring, and flipping on enforcement). The full
 flow — including a leaked key being rejected under enforcement while the
 real app keeps working — has been verified end-to-end on physical devices.
 
+Migrating an existing app (1.x or 2.x REST) to the native backend?
+**[MIGRATION_NATIVE.md](MIGRATION_NATIVE.md)** is a complete step-by-step
+playbook — written so you can also hand it directly to an AI coding agent
+("apply MIGRATION_NATIVE.md from the google_maps_places_autocomplete_widgets
+repo to this project").
+
 ## Usage
 
 You can find a complete example of usage in `example/lib/main.dart`.

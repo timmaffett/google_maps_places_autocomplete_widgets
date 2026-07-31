@@ -27,6 +27,12 @@ instead of REST — unlocking the two strongest client-side key protections:
 Use the core package alone for web/desktop (the native SDKs only exist on
 Android and iOS — check `NativePlaceApiProvider.isSupported`).
 
+**Migrating an existing app** that already uses the core package (1.x or 2.x
+REST)? Follow the step-by-step
+[MIGRATION_NATIVE.md](https://github.com/timmaffett/google_maps_places_autocomplete_widgets/blob/main/MIGRATION_NATIVE.md)
+— it is written to be followed by a human or handed verbatim to an AI coding
+agent.
+
 ## Quick start
 
 ```yaml
